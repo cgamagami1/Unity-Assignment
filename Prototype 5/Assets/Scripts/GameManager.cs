@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * (Colin Gamagami)
+ * (Assignment 8)
+ * (Implements game manager)
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;

@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * (Colin Gamagami)
+ * (Assignment 8)
+ * (Handles target interaction)
+ */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
