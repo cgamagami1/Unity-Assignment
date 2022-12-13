@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/*
+ * (Colin Gamagami)
+ * (Assignment 9)
+ * (moves ai to a target)
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;

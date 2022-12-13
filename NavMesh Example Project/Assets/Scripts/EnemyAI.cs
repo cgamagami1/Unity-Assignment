@@ -1,7 +1,7 @@
 ﻿/*
  * (Colin Gamagami)
  * (Assignment 9)
- * (click to move player to point)
+ * (Handles enemy ai)
  */
 
 using System.Collections;
@@ -10,11 +10,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-public class PlayerController : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
     public Camera cam;
     public NavMeshAgent agent;
     public ThirdPersonCharacter character;
+    public GameObject player;
+    public float chaseDistance = 8f;
 
     // Start is called before the first frame update
     void Start()
@@ -22,28 +24,28 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
         character = GetComponent<ThirdPersonCharacter>();
+        player = GameObject.FindGameObjectWithTag("Player");
         agent.updateRotation = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                agent.destination = hit.point;
-            }
-        }
+        MoveEnemy();
+    }
 
-        if (agent.remainingDistance > agent.stoppingDistance)
+    void MoveEnemy()
+    {
+        float distanceFromTarget = Vector3.Distance(transform.position, player.transform.position);
+
+        if (distanceFromTarget > agent.stoppingDistance && distanceFromTarget  < chaseDistance)
         {
+            agent.SetDestination(player.transform.position);
             character.Move(agent.desiredVelocity, false, false);
         }
         else
         {
+            agent.SetDestination(transform.position);
             character.Move(Vector3.zero, false, false);
         }
     }
