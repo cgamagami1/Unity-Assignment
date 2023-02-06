@@ -1,24 +1,39 @@
 /*
  * (Colin Gamagami)
  * (Enemy.cs)
- * (Assignment 2)
- * (Handles enemy implementation.)
+ * (Assignment 3)
+ * (Implements an enemy that chases the player until the player hides under a blue arc)
  */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, Observer
 {
-    public AttackBehavior attackType;
+    public Transform playerTransform;
+    private NavMeshAgent agent;
+    private bool isPlayerHiding = false;
 
-    public void SetAttackType(AttackBehavior newAttackType)
+    private void Awake()
     {
-        attackType = newAttackType;
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    public string Attack()
+    public void UpdateObserver(bool newIsPlayerHiding)
     {
-        return attackType.Attack();
+        isPlayerHiding = newIsPlayerHiding;
+    }
+
+    public void Update()
+    {
+        if (!isPlayerHiding)
+        {
+            agent.SetDestination(playerTransform.position);
+        }
+        else
+        {
+            agent.SetDestination(transform.position);
+        }
     }
 }
