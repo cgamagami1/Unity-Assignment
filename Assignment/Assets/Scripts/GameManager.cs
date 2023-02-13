@@ -1,23 +1,40 @@
 /*
  * (Colin Gamagami)
- * (GameManager.cs)
- * (Assignment 3)
- * (Registers the enemies with the enemy controller)
+ * (GameManagerA.cs)
+ * (Assignment 4)
+ * (Implements a game manager)
  */
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public EnemyController enemyController;
-    public Enemy enemy1;
-    public Enemy enemy2;
-
-    private void Awake()
+    public TextMeshProUGUI text;
+    public Ability ability;
+    private void Start()
     {
-        enemyController.register(enemy1);
-        enemyController.register(enemy2);
+        ability = new BaseAbility();
+    }
+
+    private void Update()
+    {
+        text.text = "Abilities: " + ability.GetAbilities();
+    }
+
+    public void AddFireAbility()
+    {
+        ability = new FireAbility(ability);
+    }
+
+    public void AddWaterAbility()
+    {
+        ability = new WaterAbility(ability);
+    }
+
+    public void AddWindAbility()
+    {
+        ability = new WindAbility(ability);
     }
 }
