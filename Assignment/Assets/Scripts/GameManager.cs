@@ -1,40 +1,45 @@
 /*
  * (Colin Gamagami)
- * (GameManagerA.cs)
- * (Assignment 4)
- * (Implements a game manager)
+ * (GameManager.cs)
+ * (Assignment 5)
+ * (Spawns a new enemy on left mouse click.)
  */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public TextMeshProUGUI text;
-    public Ability ability;
-    private void Start()
-    {
-        ability = new BaseAbility();
-    }
+    public GameObject enemy;
+    private EnemyFactory enemyFactory = new EnemyFactory();
 
     private void Update()
     {
-        text.text = "Abilities: " + ability.GetAbilities();
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            SpawnRandomEnemy();
+        }
     }
 
-    public void AddFireAbility()
+    public void SpawnRandomEnemy()
     {
-        ability = new FireAbility(ability);
-    }
+        GameObject newEnemy = null;
 
-    public void AddWaterAbility()
-    {
-        ability = new WaterAbility(ability);
-    }
+        int rand = Random.Range(0, 3);
 
-    public void AddWindAbility()
-    {
-        ability = new WindAbility(ability);
+        switch (rand)
+        {
+            case 0:
+                newEnemy = enemyFactory.CreateEnemy(enemy, "Big");
+                break;
+            case 1:
+                newEnemy = enemyFactory.CreateEnemy(enemy, "Long");
+                break;
+            case 2:
+                newEnemy = enemyFactory.CreateEnemy(enemy, "Small");
+                break;
+        }
+
+        Instantiate(newEnemy, transform);
     }
 }
