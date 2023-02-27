@@ -1,7 +1,7 @@
 /*
  * (Colin Gamagami)
  * (GameManager.cs)
- * (Assignment 5)
+ * (Assignment 6)
  * (Spawns a new enemy on left mouse click.)
  */
 using System.Collections;
@@ -11,35 +11,35 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject enemy;
-    private EnemyFactory enemyFactory = new EnemyFactory();
+    private BigEnemyCreator bigEnemyCreator;
+    private SmallEnemyCreator smallEnemyCreator;
+    private LongEnemyCreator longEnemyCreator;
+    public Transform bigEnemyTransform;
+    public Transform smallEnemyTransform;
+    public Transform longEnemyTransform;
 
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            SpawnRandomEnemy();
-        }
+        bigEnemyCreator = new BigEnemyCreator();
+        smallEnemyCreator = new SmallEnemyCreator();
+        longEnemyCreator = new LongEnemyCreator();
     }
 
-    public void SpawnRandomEnemy()
+    public void SpawnBigEnemy()
     {
-        GameObject newEnemy = null;
+        GameObject newEnemy = bigEnemyCreator.CreateEnemy(enemy);
+        Instantiate(newEnemy, bigEnemyTransform);
+    }
 
-        int rand = Random.Range(0, 3);
+    public void SpawnSmallEnemy()
+    {
+        GameObject newEnemy = smallEnemyCreator.CreateEnemy(enemy);
+        Instantiate(newEnemy, smallEnemyTransform);
+    }
 
-        switch (rand)
-        {
-            case 0:
-                newEnemy = enemyFactory.CreateEnemy(enemy, "Big");
-                break;
-            case 1:
-                newEnemy = enemyFactory.CreateEnemy(enemy, "Long");
-                break;
-            case 2:
-                newEnemy = enemyFactory.CreateEnemy(enemy, "Small");
-                break;
-        }
-
-        Instantiate(newEnemy, transform);
+    public void SpawnLongEnemy() 
+    {
+        GameObject newEnemy = longEnemyCreator.CreateEnemy(enemy);
+        Instantiate(newEnemy, longEnemyTransform);
     }
 }

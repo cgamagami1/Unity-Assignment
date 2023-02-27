@@ -1,7 +1,7 @@
 /*
  * (Colin Gamagami)
  * (LongEnemy.cs)
- * (Assignment 5)
+ * (Assignment 6)
  * (Class for long enemy.)
  */
 using System.Collections;
